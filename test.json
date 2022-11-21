@@ -1,0 +1,11 @@
+{
+  "action": "CREATE",
+  "description": "Create new user.",
+  "event_id": 1249151,
+  "event_status": true,
+  "variant_fields": {
+    "user_id": 3124124,
+    "username": "tractor",
+    "name": "Test Testerone"
+  }
+}

@@ -8,6 +8,8 @@ COPY src/go.mod ./
 COPY src/go.sum ./
 COPY src/ ./
 
+RUN go install github.com/swaggo/swag/cmd/swag@latest
+RUN swag init
 RUN go build -o /audit-server
 
 CMD ["/audit-server"]

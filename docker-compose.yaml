@@ -30,6 +30,6 @@ services:
     ports:
       - 27018:27017
   web:
-    build: .
+    image: audit-backend
     ports:
       - "8080:8080"

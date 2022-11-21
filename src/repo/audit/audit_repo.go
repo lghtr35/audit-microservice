@@ -1,9 +1,9 @@
 package audit
 
 import (
-	"audit-backend/container"
 	"audit-backend/repo"
 	"go.mongodb.org/mongo-driver/mongo"
+	"os"
 )
 
 type Repository struct {
@@ -12,6 +12,10 @@ type Repository struct {
 
 func Initialize(r *repo.Database) *Repository {
 	res := new(Repository)
-	res.Collection = r.Client.Database(container.AppConfig.DatabaseName).Collection("events")
+	dbName := os.Getenv("DATABASE_NAME")
+	if dbName == "" {
+		return nil
+	}
+	res.Collection = r.Client.Database(dbName).Collection("events")
 	return res
 }

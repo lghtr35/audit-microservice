@@ -1,7 +1,6 @@
 package container
 
 import (
-	"audit-backend/app_config"
 	"audit-backend/controllers"
 	audit_handler "audit-backend/controllers/audit"
 	"audit-backend/repo"
@@ -19,16 +18,12 @@ var auditRepo *audit_repository.Repository
 
 var Database *repo.Database
 
-var AppConfig *app_config.AppConfig
-
 func Initialize(g *gin.RouterGroup) {
 	uri := os.Getenv("MONGODB_URI")
 	if uri == "" {
 		log.Fatal("You must set your 'MONGODB_URI' environmental variable.")
 	}
 	Database = repo.InitializeConnection(uri)
-
-	AppConfig = &app_config.AppConfig{DatabaseName: os.Getenv("DATABASE_NAME")}
 
 	// Audit Initialize
 	auditRepo = audit_repository.Initialize(Database)
