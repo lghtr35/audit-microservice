@@ -23,7 +23,6 @@ func Initialize(s *audit.Service) *Handler {
 // @Produce json
 // @Param page query int true "Page Number"
 // @Param size query int true "Page Size"
-// @Param q query string false "Query"
 // @Success 200 {object} output.Page
 // @Failure 500 {object} output.BasicOutput
 // @Failure 400 {object} output.BasicOutput
