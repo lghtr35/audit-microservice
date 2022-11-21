@@ -1,0 +1,104 @@
+[
+  {
+    "event_status": true,
+    "event_id": 1,
+    "action": "CREATE_USER",
+    "description": "Create new user.",
+    "variant_fields": {
+      "name": "Test Test",
+      "user_id": "10101010",
+      "username": "test"
+    }
+  },
+  {
+    "event_status": true,
+    "event_id": 2,
+    "action": "UPDATE_USER",
+    "description": "Update an user.",
+    "variant_fields": {
+      "name": "Test Test1",
+      "user_id": "10101010",
+      "username": "test35",
+      "call_card": "new field"
+    }
+  },
+  {
+    "event_status": false,
+    "event_id": 3,
+    "action": "DELETE_USER",
+    "description": "Delete a user.",
+    "variant_fields": {
+      "user_id": "10101012",
+      "status": 400,
+      "message": "User with given ID not found"
+    }
+  },
+  {
+    "event_status": true,
+    "event_id": 4,
+    "action": "ACTION_ON_RESOURCE",
+    "description": "A user performed an action on a resource",
+    "variant_fields": {
+      "user_id": "10101010",
+      "username": "test35",
+      "resource": {
+        "type": "image",
+        "image_id": "42",
+        "image_name": "cute_kitten.png",
+        "page": "/home"
+      },
+      "action_on_resource": "click"
+    }
+  },
+  {
+    "event_status": true,
+    "event_id": 5,
+    "action": "BILL_USER",
+    "description": "A user billed with some amount for using a service",
+    "variant_fields": {
+      "user_id": "10101010",
+      "username": "test35",
+      "billed_amount": 400,
+      "currency": "USD",
+      "service": "Cloud Storage Enterprise"
+    }
+  },
+  {
+    "event_status": true,
+    "event_id": 6,
+    "action": "DEACTIVATE_USER",
+    "description": "Create new user.",
+    "variant_fields": {
+      "user_id": "10101010",
+      "username": "test35"
+    }
+  },
+  {
+    "event_status": false,
+    "event_id": 7,
+    "action": "ACTION_ON_RESOURCE",
+    "description": "A user performed an action on a resource",
+    "variant_fields": {
+      "user_id": "10101010",
+      "username": "test35",
+      "resource": {
+        "type": "csv",
+        "archive_id": "352",
+        "status": "403",
+        "message": "User does not have permission to reach that resource"
+      }
+    }
+  },
+  {
+    "event_status": true,
+    "event_id": 8,
+    "action": "STREAM_DATA",
+    "description": "A data from our side has been streamed.",
+    "variant_fields": {
+      "stream_start": 1669069506,
+      "duration": 378,
+      "data_type": "mp4",
+      "path": "/tutorials/378"
+    }
+  }
+]

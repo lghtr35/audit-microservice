@@ -23,7 +23,7 @@ func main() {
 
 	}
 	g := gin.Default()
-	// Initialize Classes
+	// Initialize Application
 	container.Initialize(g.Group("/api/v1"))
 	// Initialize Swagger
 	g.GET("swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
