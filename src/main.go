@@ -17,6 +17,7 @@ import (
 
 func main() {
 	// TODO concurrency design could be better
+	// TODO CQRS might be a better solution for performance
 	g := gin.Default()
 	// Initialize Application
 	container.Initialize(g.Group("/api/v1"))
