@@ -1,6 +1,7 @@
 version: '3'
 services:
   zookeeper:
+    container_name: zookeeper
     image: confluentinc/cp-zookeeper:7.3.0
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
@@ -21,8 +22,16 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+  kafka-rest:
+    image: confluentinc/cp-kafka-rest
+    container_name: kafka-rest
+    ports:
+      - "8082:8082"
+    environment:
+      - KAFKA_REST_BOOTSTRAP_SERVERS=kafka:29092
   mongo:
     image: mongo
+    container_name: mongo
     restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
@@ -32,6 +41,7 @@ services:
   web:
     build: .
     image: audit-backend
+    container_name: audit-backend
     ports:
       - "8080:8080"
     environment:
@@ -41,3 +51,4 @@ services:
       - KAFKA_TOPIC_NAME=events
       - GIN_MODE=release
       - KAFKA_BOOTSTRAP_URI=kafka:29092
+      - KAFKA_REST_URI=kafka-rest:8082

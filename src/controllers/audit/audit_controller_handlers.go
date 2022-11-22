@@ -1,7 +1,6 @@
 package audit
 
 import (
-	"audit-backend/models/input"
 	"audit-backend/models/output"
 	"audit-backend/services/audit"
 	"github.com/gin-gonic/gin"
@@ -41,28 +40,6 @@ func (h Handler) FilterAudits(c *gin.Context) {
 		c.JSON(failure.Status, failure)
 	}
 	res := h.service.GetAll(qs)
-	c.JSON(res.Status, res)
-}
-
-// AddEvent godoc
-// @Summary Add an audit of event happened
-// @Description An event audit should be provided
-// @Tags audits
-// @Accept json
-// @Produce json
-// @Param input body input.AuditInput true "Event Audit to save"
-// @Success 200 {object} output.BasicOutput
-// @Failure 400 {object} output.BasicOutput
-// @Failure 500 {object} output.BasicOutput
-// @Router /audit/audit [post]
-func (h Handler) AddEvent(c *gin.Context) {
-	body := new(input.AuditInput)
-	err := c.BindJSON(&body)
-	if err != nil {
-		failure := generateErrorResponse(err.Error(), 400)
-		c.JSON(failure.Status, failure)
-	}
-	res := h.service.Create(body)
 	c.JSON(res.Status, res)
 }
 

@@ -15,6 +15,5 @@ func InitializeAuditController(h *audit.Handler) *AuditController {
 
 func (c AuditController) ConfigureAuditController(group *gin.RouterGroup) *AuditController {
 	group.GET("/filter", c.handler.FilterAudits)
-	group.POST("/audit", c.handler.AddEvent)
 	return &c
 }
