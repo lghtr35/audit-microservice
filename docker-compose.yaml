@@ -28,8 +28,16 @@ services:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
     ports:
-      - 27018:27017
+      - "27018:27017"
   web:
+    build: .
     image: audit-backend
     ports:
       - "8080:8080"
+    environment:
+      - MONGODB_URI=mongodb://root:example@mongo:27017/?tls=false
+      - DATABASE_NAME=event_aud
+      - KAFKA_GROUP_ID=event-audits
+      - KAFKA_TOPIC_NAME=events
+      - GIN_MODE=release
+      - KAFKA_BOOTSTRAP_URI=kafka:29092

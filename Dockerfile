@@ -11,6 +11,6 @@ COPY src/ ./
 
 RUN go install github.com/swaggo/swag/cmd/swag@latest
 RUN swag init
-RUN go build -o /audit-server
+RUN go build -tags musl -o /audit-server
 
 CMD ["/audit-server"]

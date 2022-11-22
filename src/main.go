@@ -4,10 +4,8 @@ import (
 	"audit-backend/container"
 	_ "audit-backend/docs"
 	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
-	"log"
 )
 
 // @title			Audit Micro-Service
@@ -18,15 +16,12 @@ import (
 // @BasePath  /api/v1
 
 func main() {
-	if err := godotenv.Load(); err != nil {
-		log.Fatal("No .env file found")
-
-	}
+	// TODO concurrency design could be better
 	g := gin.Default()
 	// Initialize Application
 	container.Initialize(g.Group("/api/v1"))
 	// Initialize Swagger
 	g.GET("swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-
-	g.Run()
+	// Start Server
+	container.StartServer(g)
 }

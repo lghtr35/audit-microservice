@@ -4,7 +4,6 @@ import (
 	"audit-backend/consumer"
 	"audit-backend/controllers"
 	audit_handler "audit-backend/controllers/audit"
-	"audit-backend/producer"
 	"audit-backend/repo"
 	audit_repository "audit-backend/repo/audit"
 	audit_service "audit-backend/services/audit"
@@ -13,6 +12,7 @@ import (
 	"log"
 	"os"
 	"os/signal"
+	"sync"
 	"syscall"
 )
 
@@ -21,13 +21,12 @@ var auditHandler *audit_handler.Handler
 var auditService *audit_service.Service
 var auditRepo *audit_repository.Repository
 var eventConsumer *consumer.EventConsumer
-var eventProducer *producer.EventProducer
 
 var Database *repo.Database
 
 func Initialize(g *gin.RouterGroup) {
 	uri := os.Getenv("MONGODB_URI")
-	if uri == "" {
+	if len(uri) == 0 {
 		log.Fatal("You must set your 'MONGODB_URI' environmental variable.")
 	}
 	Database = repo.InitializeConnection(uri)
@@ -41,18 +40,26 @@ func Initialize(g *gin.RouterGroup) {
 	conf := make(kafka.ConfigMap)
 	conf["group.id"] = os.Getenv("KAFKA_GROUP_ID")
 	conf["auto.offset.reset"] = "earliest"
-	conf["bootstrap.servers"] = "localhost:9092"
+	conf["bootstrap.servers"] = os.Getenv("KAFKA_BOOTSTRAP_URI")
 	var err error
-	eventConsumer, err = consumer.Initialize(auditService, &conf)
+	topic := os.Getenv("KAFKA_TOPIC_NAME")
+	if len(topic) == 0 {
+		log.Fatal("You must set your 'KAFKA_TOPIC_NAME' environmental variable.")
+	}
+	eventConsumer, err = consumer.Initialize(auditService, &conf, topic)
 	if err != nil {
 		log.Fatalf("Kafka consumer can not be initialized, Error: %s", err.Error())
 	}
-	eventProducer, err = producer.Initialize(&conf)
-	if err != nil {
-		log.Fatalf("Example Kafka producer can not be initialized, Error: %s", err.Error())
-	}
+
+}
+
+func StartServer(g *gin.Engine) {
+	var wg sync.WaitGroup
 	sig := make(chan os.Signal, 1)
 	signal.Notify(sig, syscall.SIGINT, syscall.SIGTERM)
-	go eventProducer.Produce(sig)
-	go eventConsumer.Listen(sig)
+	wg.Add(1)
+	go eventConsumer.Listen(sig, &wg)
+	g.Run()
+	wg.Wait()
+	eventConsumer.Close()
 }
