@@ -3,11 +3,14 @@ This is an microservice for auditing events of other microservices. It is writte
 
 ## Installation and Setup
 
-You will need docker for running the project.
-After cloning the project, run the command at the top of the directory 
+You will need to have docker for running the project.
+After cloning the project, a dotenv file must be created. There is one example in the repo so you can use that to create yours.
+
+If the project is clonned, dotenv is ready and docker is installed, you can use this command:
 ```
 docker compose up
 ```
+It will build and deploy the project in a docker container.
 
 Http server, Kafka and MongoDB will intialize in container. Http server has a example event producer built in. So, at the start it will fire up 8 example events to kafka and save to db.
 
@@ -28,3 +31,7 @@ For example:
 /api/v1/audit/filter?page=2&size=10&action=BILL_USER&variant_fields.billed_amount=$gte&variant_fields.billed_amount=100&variant_fields.currency="USD"
 ```
 This will return documents with BILL_USER action and greater than or equals to 100 USD with offset 20 and limit 10
+
+## Kafka
+
+Kafka 
