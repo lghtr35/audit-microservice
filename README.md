@@ -37,7 +37,7 @@ This will return documents with BILL_USER action and greater than or equals to 1
 Kafka config:
 ```
 auto.offset.reset: earliest
-bootstrap.servers: localhost:9092
+bootstrap.servers: kafka:29092
 group.id: event_audits
 topic: events
 ```
