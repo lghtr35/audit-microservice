@@ -10,8 +10,9 @@ If the project is clonned and docker is installed, you can use this command:
 docker compose up
 ```
 It will build and deploy the project in a docker container.
+You can edit the ```docker-compose.yaml``` for different environment variables and configuration.
 
-Http server, Kafka and MongoDB will intialize in container. Http server has a example event producer built in. So, at the start it will fire up 8 example events to kafka and save to db.
+After running the command Http server, Kafka and MongoDB will intialize in container.
 
 There is an swagger endpoint on the server. You can connect to it using ```http://localhost:8080/swagger/index.html```
 
@@ -38,4 +39,5 @@ Kafka config:
 auto.offset.reset: earliest
 bootstrap.servers: localhost:9092
 group.id: event_audits
+topic: events
 ```
