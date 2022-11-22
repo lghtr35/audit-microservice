@@ -4,9 +4,8 @@ This is an microservice for auditing events of other microservices. It is writte
 ## Installation and Setup
 
 You will need to have docker for running the project.
-After cloning the project, a dotenv file must be created. There is one example in the repo so you can use that to create yours.
 
-If the project is clonned, dotenv is ready and docker is installed, you can use this command:
+If the project is clonned and docker is installed, you can use this command:
 ```
 docker compose up
 ```
@@ -34,4 +33,9 @@ This will return documents with BILL_USER action and greater than or equals to 1
 
 ## Kafka
 
-Kafka 
+Kafka config:
+```
+auto.offset.reset: earliest
+bootstrap.servers: localhost:9092
+group.id: event_audits
+```
